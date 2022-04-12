@@ -6,6 +6,10 @@ import org.testng.Assert;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import java.io.FileNotFoundException;
+
+import static io.restassured.module.jsv.JsonSchemaValidator.*;
+
 import static io.restassured.RestAssured.*;
 import static io.restassured.matcher.RestAssuredMatchers.*;
 import static org.hamcrest.Matchers.*;
@@ -107,4 +111,20 @@ public class getcall
 
         }
     }
+
+    //method to validate json schema
+    @Test(priority = 7)
+    public void validate_json_schema()throws FileNotFoundException
+    {
+        given().
+                baseUri("https://gorest.co.in/public/v1").
+                log().all().
+        when().
+                get("/users").
+        then().
+                log().ifError().
+                body(matchesJsonSchema("C:\\Users\\aterahman\\HU_Assignment_Track_Api\\src\\test\\java\\jsonschema_for_get.json"));
+
+    }
+
 }
