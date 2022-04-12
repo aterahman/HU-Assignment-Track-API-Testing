@@ -13,6 +13,9 @@ import static org.hamcrest.Matchers.*;
 //class to get() payload
 public class getcall
 {
+    JSONObject obj;
+    JSONArray arr;
+
     //method to get the status code of the response payload
     @Test(priority = 1)
     public void test_statuscode()
@@ -27,28 +30,50 @@ public class getcall
 
     }
 
-
-    //method to get the response payload and to verify whether all genders are male or female
-    @Test
-    public void verify_response_payload()
+    //method to get the response payload and to define global variables JSONObject and JSONArray
+    @Test(priority = 2)
+    public void get_response_payload()
     {
         Response response =
-        given().
-                baseUri("https://gorest.co.in/public/v1").
+                given().
+                        baseUri("https://gorest.co.in/public/v1").
 
-        when().
-                get("/users").
-        then().
-                extract().response();
+                        when().
+                        get("/users").
+                        then().
+                        extract().response();
 
 
-        JSONObject obj = new JSONObject(response.asString());
+        obj = new JSONObject(response.asString());
 
-        JSONArray arr = obj.getJSONArray("data");
+         arr = obj.getJSONArray("data");
+
+    }
+
+
+    //method to verify whether all genders in response are male or female
+    @Test(priority = 3)
+    public void verify_response_payload_gender()
+    {
+
         for(int i =0;i<arr.length();i++)
         {
             String gender = (String) arr.getJSONObject(i).get("gender");
             Assert.assertTrue(gender.equals("male")||gender.equals("female"));
+
+        }
+    }
+
+    //method to get the names from the payload
+    @Test(priority = 4)
+    public void verify_response_payload_name()
+    {
+
+        for(int i =0;i<arr.length();i++)
+        {
+            String name = (String) arr.getJSONObject(i).get("name");
+            System.out.println(name);
+
 
         }
     }
