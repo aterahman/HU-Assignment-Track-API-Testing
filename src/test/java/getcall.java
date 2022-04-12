@@ -64,16 +64,20 @@ public class getcall
         }
     }
 
-    //method to get the names from the payload
+
+    //method to verify if the ids in the payload are unique
     @Test(priority = 4)
-    public void verify_response_payload_name()
+    public void verify_response_payload_id()
     {
 
         for(int i =0;i<arr.length();i++)
         {
-            String name = (String) arr.getJSONObject(i).get("name");
-            System.out.println(name);
-
+            int id1 = (int) arr.getJSONObject(i).get("id");
+            for(int j =i+1;j<arr.length();j++)
+            {
+                int id2 = (int) arr.getJSONObject(j).get("id");
+                Assert.assertFalse(id1==id2);
+            }
 
         }
     }
