@@ -18,7 +18,7 @@ public class excelcall
     @Test
     public JSONObject excel()throws FileNotFoundException, IOException
     {
-        String xlpath = "C:\\Users\\aterahman\\HU_Assignment_Track_Api\\src\\test\\java\\userdata.xlsx";
+        String xlpath = "src\\main\\resources\\userdata.xlsx";
         FileInputStream inputStream = new FileInputStream(xlpath);
 
         XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
