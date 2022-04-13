@@ -33,16 +33,13 @@ public class postcall
     }
 
     @Test
-    public void validate_pos_request()
+    public void validate_pos_request()throws IOException,FileNotFoundException
     {
         String token = "489f98c45846d05b49febcd91d7015e4387a916da109e14d00cdbd1ba053b887";
-        String payload = "{\n" +
-                "    \"name\":\"Tenali Ramakrishna\", \n" +
-                "    \"gender\":\"male\", \n" +
-                "    \"email\":\"tena.rama@15ce.com\", \n" +
-                "    \"status\":\"active\"\n" +
-                "}"
-        ;
+        excelcall e = new excelcall();
+        JSONObject obj = e.excel();
+        String payload = obj.toString();
+
         given().
                 header("Authorization","Bearer " +token).
                 body(payload).
