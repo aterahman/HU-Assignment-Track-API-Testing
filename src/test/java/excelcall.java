@@ -16,7 +16,7 @@ public class excelcall
 {
 
     @Test
-    public JSONArray excel()throws FileNotFoundException, IOException
+    public JSONObject excel()throws FileNotFoundException, IOException
     {
         String xlpath = "C:\\Users\\aterahman\\HU_Assignment_Track_Api\\src\\test\\java\\userdata.xlsx";
         FileInputStream inputStream = new FileInputStream(xlpath);
@@ -56,6 +56,7 @@ public class excelcall
 
             }
         }
-        return arr;
+
+        return arr.getJSONObject(1);
     }
 }
