@@ -4,6 +4,7 @@
     <test verbose="2" preserve-order="true" name="C:/Users/aterahman/HU_Assignment_Track_Api/src/test/java">
         <classes>
             <class name="getcall"/>
+            <class name="postcall"/>
 
         </classes>
 </test>
