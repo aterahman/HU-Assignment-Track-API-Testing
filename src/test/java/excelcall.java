@@ -26,11 +26,13 @@ public class excelcall
 
         int rows = sheet.getLastRowNum();
         int columns = sheet.getRow(1).getLastCellNum();
-        JSONObject input = new JSONObject();
+
         JSONArray arr = new JSONArray();
 
         for(int r=0;r<=rows;r++)
         {
+            JSONObject input = new JSONObject();
+
             XSSFRow row = sheet.getRow(r);
             for(int c=0; c<columns; c++) {
                 XSSFCell cell = row.getCell(c);
@@ -52,11 +54,13 @@ public class excelcall
                         input.put("status", cell.getStringCellValue());
                         break;
                 }
-                arr.put(input);
 
             }
+            arr.put(input);
         }
+
         int index = (int) (Math.random()*10);
+        System.out.println(index);
         return arr.getJSONObject(index);
     }
 }
