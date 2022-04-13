@@ -56,7 +56,7 @@ public class excelcall
 
             }
         }
-
-        return arr.getJSONObject(1);
+        int index = (int) (Math.random()*10);
+        return arr.getJSONObject(index);
     }
 }
