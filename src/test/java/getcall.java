@@ -26,10 +26,12 @@ public class getcall
     {
         given().
                 baseUri("https://gorest.co.in/public/v1").
+                log().all().
 
         when().
                 get("/users").
         then().
+                log().all().
                 statusCode(200);
 
     }
@@ -123,7 +125,7 @@ public class getcall
                 get("/users").
         then().
                 log().ifError().
-                body(matchesJsonSchema("C:\\Users\\aterahman\\HU_Assignment_Track_Api\\src\\test\\java\\jsonschema_for_get.json"));
+                body(matchesJsonSchemaInClasspath("jsonschema_for_get.json"));
 
     }
 
