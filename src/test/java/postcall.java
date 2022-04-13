@@ -1,5 +1,11 @@
+import io.restassured.RestAssured;
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.builder.ResponseSpecBuilder;
+import io.restassured.filter.log.LogDetail;
+import io.restassured.http.ContentType;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.io.FileNotFoundException;
@@ -10,38 +16,38 @@ import static io.restassured.RestAssured.given;
 //class to get() payload
 public class postcall
 {
-    @Test(priority = 1)
-    public void test_statuscode()throws FileNotFoundException, IOException
+    @BeforeClass
+    public void beforeclass()
     {
-        String temp_token = "1e3fbfc04d510423f16db6b1976fb8d49a339e4e486ef5006ebe118b552a2a32";
-        JSONArray arr;
+        RequestSpecBuilder requestSpecBuilder = new RequestSpecBuilder().
+                setBaseUri("https://gorest.co.in/public/v1").
+                addHeader("Content-type","application/json").
+                log(LogDetail.ALL);
+        RestAssured.requestSpecification = requestSpecBuilder.build();
 
-        excelcall e = new excelcall();
-        arr = e.excel();
-        JSONObject obj = arr.getJSONObject(0);
-
-        given().
-                baseUri("https://gorest.co.in/public/v1").
-                header("Authorization","Bearer"+ temp_token).
-                body(obj).
-                header("Content-type","applications/java").
-        when().
-                post("/users").
-        then().
-                statusCode(201);
+        ResponseSpecBuilder responseSpecBuilder = new ResponseSpecBuilder().
+                expectStatusCode(201).
+                expectContentType(ContentType.JSON).
+                log(LogDetail.ALL);
+        RestAssured.responseSpecification = responseSpecBuilder.build();
     }
 
-    @Test(priority = 2)
-    public void get_response_payload()
+    @Test
+    public void validate_pos_request()
     {
+        String token = "489f98c45846d05b49febcd91d7015e4387a916da109e14d00cdbd1ba053b887";
+        String payload = "{\n" +
+                "    \"name\":\"Tenali Ramakrishna\", \n" +
+                "    \"gender\":\"male\", \n" +
+                "    \"email\":\"tena.rama@15ce.com\", \n" +
+                "    \"status\":\"active\"\n" +
+                "}"
+        ;
         given().
-                baseUri("https://gorest.co.in/public/v1").
-
-
-                when().
+                header("Authorization","Bearer " +token).
+                body(payload).
+        when().
                 post("/users").
-                then().
-                extract().response();
-
+        then();
     }
 }
